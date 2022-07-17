@@ -1,12 +1,15 @@
 import { createSearchPage } from './pages/searchPage.js';
+import { getGeo } from './services/apiService.js';
 import './styles/main.scss';
 import 'jquery';
 import 'popper.js';
 import 'bootstrap';
 
-const loadApp = () => {
+const loadApp = async () => {
   document.title = 'Weather Application';
-  createSearchPage();
+  const geoResult = await getGeo();
+  console.log(geoResult);
+  createSearchPage(geoResult);
 };
 
 window.addEventListener('load', loadApp);

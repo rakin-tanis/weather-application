@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -60,7 +61,11 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        loader: 'file-loader',
+        options: {
+          outputPath: 'assets',
+          name: '[name].[ext]',
+        },
       },
     ],
   },
@@ -69,7 +74,8 @@ module.exports = {
       title: 'Weather Application',
       filename: 'index.html',
       template: 'src/template.html',
-      favicon: "./src/assets/weather_icon.ico"
+      favicon: './src/assets/weather_icon.ico',
     }),
+    new NodePolyfillPlugin(),
   ],
 };

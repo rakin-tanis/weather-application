@@ -3,3 +3,7 @@ export const toHtmlElement = (htmlStr) => {
   template.innerHTML = htmlStr.trim();
   return template.content.firstChild;
 };
+
+export function importAll(r) {
+  return r.keys().map(r);
+}

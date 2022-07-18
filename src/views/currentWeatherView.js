@@ -13,7 +13,7 @@ import {
 
 export const createCurrentWeatherContainer = () => {
   const htmlStr = String.raw`
-      <div class="container d-flex justify-content-center" style="margin-bottom: -4px;">
+      <div class="container d-flex justify-content-center">
 
         <div class="container d-flex flex-row tw-73">
           <div class="d-flex flex-row">

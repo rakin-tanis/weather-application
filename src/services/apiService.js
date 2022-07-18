@@ -1,4 +1,3 @@
-import { env } from '../env.js';
 
 const makeRequest = async (url, params = {}, options = {}) => {
   const urlWithParams = addSearchParams(new URL(url), params);
@@ -24,14 +23,10 @@ const addSearchParams = (url, params = {}) =>
     ]).toString()}`
   );
 
-export const getIp = () => makeRequest(env.IP_ENDPOINT);
-
-export const getCountry = () => makeRequest(env.COUNTRY_ENDPOINT);
-
-export const getGeo = () => makeRequest(env.GEO_ENDPOINT);
+export const getGeo = () => makeRequest(process.env.GEO_ENDPOINT);
 
 export const getCity = (city) =>
-  makeRequest(env.CITY_SEARCH_ENDPOINT, {
+  makeRequest(process.env.CITY_SEARCH_ENDPOINT, {
     name: city,
     count: 10,
     format: 'json',
@@ -39,17 +34,17 @@ export const getCity = (city) =>
   });
 
 export const getCurrentWeather = (lon, lat) =>
-  makeRequest(env.CURRENT_WEATHER_ENDPOINT, {
+  makeRequest(process.env.CURRENT_WEATHER_ENDPOINT, {
     lon: lon,
     lat: lat,
     units: 'metric',
-    appid: env.OPEN_WEATHER_API_KEY,
+    appid: process.env.OPEN_WEATHER_API_KEY,
   });
 
 export const getWeatherForecast = (lon, lat) =>
-  makeRequest(env.CURRENT_AND_FORECAST_WEATHER_ENDPOINT, {
+  makeRequest(process.env.CURRENT_AND_FORECAST_WEATHER_ENDPOINT, {
     lat: lon,
     lon: lat,
     units: 'metric',
-    appid: env.OPEN_WEATHER_API_KEY,
+    appid: process.env.OPEN_WEATHER_API_KEY,
   });

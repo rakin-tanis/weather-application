@@ -13,13 +13,14 @@ import {
 } from '../constants.js';
 import { env } from '../env.js';
 import { addHours, capitalize } from '../utils/util.js';
+import { changeBackgroundVideo } from './backgroundVideoComponent';
 
 export const createCurrentWeatherComponent = () => {
   const userInterface = document.getElementById('user-interface');
   userInterface.appendChild(createCurrentWeatherContainer());
 };
 
-export const populateCurrentWeatherComponent = ({ city, weather }) => {
+export const populateCurrentWeatherComponent = ({ cityName, weather }) => {
   const temp = Math.floor(weather.main.temp);
   const humidity = weather.main.humidity;
   const wind = weather.wind.speed;
@@ -27,6 +28,7 @@ export const populateCurrentWeatherComponent = ({ city, weather }) => {
   const date = dateFormat(new Date(), 'dddd HH:MM');
   const rain = 'rain';
   const icon = env.ICON_ENDPOINT + weather.weather[0].icon + '@2x.png';
+  changeBackgroundVideo(weather.weather[0].icon);
 
   document.getElementById(CURRENT_WEATHER_ICON_ID).src = icon;
   document.getElementById(CURRENT_TEMPERATURE_ID).innerText = temp;
@@ -36,13 +38,13 @@ export const populateCurrentWeatherComponent = ({ city, weather }) => {
   document.getElementById(CURRENT_WIND_ID).innerText = `Wind:${wind}km/s`;
   document.getElementById(CURRENT_DESCRIPTION_ID).innerText = description;
   document.getElementById(CURRENT_DATE_ID).innerText = date;
-  document.getElementById(CURRENT_CITY_ID).innerText = city;
+  document.getElementById(CURRENT_CITY_ID).innerText = cityName;
   document.getElementById(CURRENT_RAIN_ID).innerText = `Rain:${rain}`;
   document.getElementById(DAILY_FORECAST_LINK_ID).style = 'display: none';
 };
 
 export const populateCurrentWeatherIntervalComponent = ({
-  city,
+  cityName,
   weather,
   showDailyForecastCallback,
 }) => {
@@ -57,6 +59,7 @@ export const populateCurrentWeatherIntervalComponent = ({
     dateFormat(addHours(3, date), 'HH:MM');
   const rain = 'rain';
   const icon = env.ICON_ENDPOINT + weather.weather[0].icon + '@2x.png';
+  changeBackgroundVideo(weather.weather[0].icon);
 
   document.getElementById(CURRENT_WEATHER_ICON_ID).src = icon;
   document.getElementById(CURRENT_TEMPERATURE_ID).innerText = temp;
@@ -66,7 +69,7 @@ export const populateCurrentWeatherIntervalComponent = ({
   document.getElementById(CURRENT_WIND_ID).innerText = `Wind:${wind}km/s`;
   document.getElementById(CURRENT_DESCRIPTION_ID).innerText = description;
   document.getElementById(CURRENT_DATE_ID).innerText = dateStr;
-  document.getElementById(CURRENT_CITY_ID).innerText = city;
+  document.getElementById(CURRENT_CITY_ID).innerText = cityName;
   document.getElementById(CURRENT_RAIN_ID).innerText = `Rain:${rain}`;
   document.getElementById(DAILY_FORECAST_LINK_ID).style = 'display: block';
   document

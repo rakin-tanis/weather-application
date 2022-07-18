@@ -60,9 +60,9 @@ const populateAutocomplete = (searchedKey, results, callback) => {
     const item = document.getElementById(result.id);
     item.addEventListener('click', () => {
       callback({
-        cityName: result.name,
-        longitude: result.longitude,
-        latitude: result.latitude,
+        city: result.name,
+        lon: result.longitude,
+        lat: result.latitude,
       });
       cleanAutocomplete();
       searchInput.value = result.name;

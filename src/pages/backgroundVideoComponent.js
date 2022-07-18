@@ -19,7 +19,6 @@ export const createBackgroundVideoComponent = () => {
   */
 
 export const changeBackgroundVideo = (id) => {
-  console.log(id);
   switch (id) {
     case '01d':
       changeVideo('ipf7ifVSeDU'); // clear day
@@ -85,5 +84,4 @@ const changeVideo = (videoId) => {
   document.getElementById(
     BACKGROUND_VIDEO_ID
   ).src = `https://www.youtube.com/embed/${videoId}?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=${videoId}&amp;start=1549`;
-  console.log(document.getElementById(BACKGROUND_VIDEO_ID).src);
 };

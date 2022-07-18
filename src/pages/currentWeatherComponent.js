@@ -11,7 +11,7 @@ import {
   CURRENT_WEATHER_ICON_ID,
   DAILY_FORECAST_LINK_ID,
 } from '../constants.js';
-import { env } from '../env.js';
+
 import { addHours, capitalize } from '../utils/util.js';
 import { changeBackgroundVideo } from './backgroundVideoComponent';
 
@@ -27,7 +27,7 @@ export const populateCurrentWeatherComponent = ({ cityName, weather }) => {
   const description = capitalize(weather.weather[0].description);
   const date = dateFormat(new Date(), 'dddd HH:MM');
   const rain = 'rain';
-  const icon = env.ICON_ENDPOINT + weather.weather[0].icon + '@2x.png';
+  const icon = process.env.ICON_ENDPOINT + weather.weather[0].icon + '@2x.png';
   changeBackgroundVideo(weather.weather[0].icon);
 
   document.getElementById(CURRENT_WEATHER_ICON_ID).src = icon;
@@ -58,7 +58,7 @@ export const populateCurrentWeatherIntervalComponent = ({
     ' - ' +
     dateFormat(addHours(3, date), 'HH:MM');
   const rain = 'rain';
-  const icon = env.ICON_ENDPOINT + weather.weather[0].icon + '@2x.png';
+  const icon = process.env.ICON_ENDPOINT + weather.weather[0].icon + '@2x.png';
   changeBackgroundVideo(weather.weather[0].icon);
 
   document.getElementById(CURRENT_WEATHER_ICON_ID).src = icon;

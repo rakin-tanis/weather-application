@@ -12,4 +12,7 @@ export const CURRENT_CITY_ID = 'current_city';
 export const CURRENT_WEATHER_ICON_ID = 'current_weather_icon';
 export const BACKGROUND_VIDEO_ID = 'background_video';
 export const DAILY_FORECAST_LINK_ID = 'daily_forecast_link';
+export const RECENTLY_SEARCHED_ITEMS_ID = 'recently_searched_items';
+export const RECENTLY_SEARCHED_ID = 'recently_searched';
+export const RECENTLY_SEARCHED_ITEMS_TITLE_ID = 'recently_searched_items_title';
 

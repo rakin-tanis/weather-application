@@ -12,8 +12,8 @@ const prodConfig = {
       CURRENT_WEATHER_ENDPOINT:
         'https://api.openweathermap.org/data/2.5/weather',
       CURRENT_AND_FORECAST_WEATHER_ENDPOINT:
-        'http://api.openweathermap.org/data/2.5/forecast',
-      ICON_ENDPOINT: 'http://openweathermap.org/img/wn/',
+        'https://api.openweathermap.org/data/2.5/forecast',
+      ICON_ENDPOINT: 'https://openweathermap.org/img/wn/',
     }),
   ],
 };

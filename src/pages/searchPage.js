@@ -1,28 +1,74 @@
 import {
   createCurrentWeatherComponent,
   populateCurrentWeatherComponent,
+  populateCurrentWeatherIntervalComponent,
 } from '../pages/currentWeatherComponent.js';
 import { createForecastWeatherContainer } from '../pages/forecastWeatherComponent.js';
 import { populateForecastContainer } from '../pages/forecastWeatherComponent.js';
-import { image } from '../assets/weather_condition_icons.png';
 import { createSearchComponent } from './searchComponent.js';
 import { createBackgroundVideoComponent } from './backgroundVideoComponent.js';
 import { createHeaderComponent } from './headerPage.js';
+import { getCurrentWeather } from '../services/apiService';
+import { getWeatherForecast } from '../services/apiService.js';
 
 export const createSearchPage = async (geoResult) => {
   createHeaderComponent();
-  createSearchComponent(searchCallback);
+  createSearchComponent(populateWeather);
   createBackgroundVideoComponent();
-  await createCurrentWeatherComponent(geoResult);
-  await createForecastWeatherContainer(geoResult);
+  createCurrentWeatherComponent();
+  setCurrentWeather({
+    cityName: geoResult.city,
+    latitude: geoResult.longitude,
+    longitude: geoResult.latitude,
+  }).then();
+  createForecastWeatherContainer();
+  setForecastWeather({
+    cityName: geoResult.city,
+    latitude: geoResult.longitude,
+    longitude: geoResult.latitude,
+  }).then();
 };
 
-const searchCallback = async (value) => {
-  console.log(value);
-  populateCurrentWeatherComponent({
-    city: value.name,
-    lon: value.latitude,
-    lat: value.longitude,
+const populateWeather = async ({ cityName, longitude, latitude }) => {
+  setCurrentWeather({
+    cityName: cityName,
+    latitude: longitude,
+    longitude: latitude,
+  }).then();
+  setForecastWeather({
+    cityName: cityName,
+    latitude: longitude,
+    longitude: latitude,
+  }).then();
+};
+
+const forecastChangedCallback = ({ city, latitude, longitude, forecast }) => {
+  populateCurrentWeatherIntervalComponent({
+    city: city,
+    weather: forecast,
+    showDailyForecastCallback: () => setCurrentWeather({
+      cityName: city,
+      latitude: longitude,
+      longitude: latitude,
+    }),
   });
-  populateForecastContainer({ lon: value.latitude, lat: value.longitude });
+};
+
+const setCurrentWeather = async ({ cityName, longitude, latitude }) => {
+  const currentWeather = await getCurrentWeather(longitude, latitude);
+  populateCurrentWeatherComponent({
+    city: cityName,
+    weather: currentWeather,
+  });
+};
+
+const setForecastWeather = async ({ cityName, longitude, latitude }) => {
+  const forecasts = await getWeatherForecast(longitude, latitude);
+  populateForecastContainer({
+    city: cityName,
+    latitude: longitude,
+    longitude: latitude,
+    forecasts: forecasts,
+    forecastChangedCallback: forecastChangedCallback,
+  });
 };

@@ -8,11 +8,12 @@ import {
   CURRENT_DATE_ID,
   CURRENT_DESCRIPTION_ID,
   CURRENT_WEATHER_ICON_ID,
+  DAILY_FORECAST_LINK_ID,
 } from '../constants.js';
 
 export const createCurrentWeatherContainer = () => {
   const htmlStr = String.raw`
-      <div class="container d-flex justify-content-center">
+      <div class="container d-flex justify-content-center" style="margin-bottom: -4px;">
 
         <div class="container d-flex flex-row tw-73">
           <div class="d-flex flex-row">
@@ -30,6 +31,7 @@ export const createCurrentWeatherContainer = () => {
               <div id="${CURRENT_CITY_ID}" style="font-weight:bold; font-size:2rem;">city</div>
               <div id="${CURRENT_DATE_ID}">date</div>
               <div id="${CURRENT_DESCRIPTION_ID}">description</div>
+              <div id="${DAILY_FORECAST_LINK_ID}"><a class="text-muted" style="font-size:0.8rem; text-transform:uppercase;" href="#">daily forecast</a></div>
             </div>
           <div>
         </div>

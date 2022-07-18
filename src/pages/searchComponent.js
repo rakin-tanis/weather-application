@@ -8,6 +8,7 @@ import {
   createSearchElements,
 } from '../views/searchComponentView.js';
 import { getCity } from '../services/apiService.js';
+import { capitalize } from '../utils/util.js';
 
 export const createSearchComponent = (callback) => {
   const userInterface = document.getElementById('user-interface');
@@ -30,7 +31,7 @@ const addCallback = (callback) => {
     populateAutocomplete(searchInput.value, cityResult.results, callback);
   });
   searchForm.addEventListener('focusout', () => {
-    setTimeout(() => cleanAutocomplete(), 10);
+    setTimeout(() => cleanAutocomplete(), 1000);
   });
   searchInput.addEventListener('focusin', () => {
     if (searchInput.value.length >= 3) {
@@ -58,7 +59,11 @@ const populateAutocomplete = (searchedKey, results, callback) => {
     searchResultContainer.appendChild(resultElement);
     const item = document.getElementById(result.id);
     item.addEventListener('click', () => {
-      callback(result);
+      callback({
+        cityName: result.name,
+        longitude: result.longitude,
+        latitude: result.latitude,
+      });
       cleanAutocomplete();
       searchInput.value = result.name;
     });
@@ -74,12 +79,4 @@ const cleanAutocomplete = () => {
 const expressSearchedPart = (str, substr) => {
   const strRegExp = new RegExp(capitalize(substr), 'g');
   return str.replace(strRegExp, '<b>' + capitalize(substr) + '</b>');
-};
-
-const capitalize = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-const itemSelectedCallback = (id) => {
-  console.log(id);
 };

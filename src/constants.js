@@ -10,4 +10,6 @@ export const CURRENT_DATE_ID = 'current_date';
 export const CURRENT_DESCRIPTION_ID = 'current_description';
 export const CURRENT_CITY_ID = 'current_city';
 export const CURRENT_WEATHER_ICON_ID = 'current_weather_icon';
+export const BACKGROUND_VIDEO_ID = 'background_video';
+export const DAILY_FORECAST_LINK_ID = 'daily_forecast_link';
 

@@ -17,14 +17,15 @@ export const createForecastView = (forecast) => {
   const day = dateFormat(Date.parse(forecast.dt_txt), 'dddd');
   const tempMax = Math.floor(forecast.main.temp_max);
   const tempMin = Math.floor(forecast.main.temp_min);
+  const id = forecast.dt_txt.replaceAll(' ', '-');
 
   const htmlStr = String.raw`
-        <div class="card tw-93" style="width: 10rem; flex: 0 0 auto;">
+        <div id="${id}" class="card tw-93" style="width: 10rem; flex: 0 0 auto; border-radius:0;">
             <div class="card-body">
                 <p class="card-text text-center"><small class="text-muted">${time}</small></p>
                 <h5 class="card-title text-center">${day}</h5>
                 <img src="${icon.default}" class="card-img-top" alt="...">
-                <p class="card-text text-center">${tempMax}° ${tempMin}°</p>
+                <p class="card-text text-center">${tempMax}° <span class="text-muted">${tempMin}°</span></p>
             </div>
         </div>
       `;

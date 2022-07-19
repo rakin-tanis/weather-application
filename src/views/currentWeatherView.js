@@ -8,6 +8,7 @@ import {
   CURRENT_DATE_ID,
   CURRENT_DESCRIPTION_ID,
   CURRENT_WEATHER_ICON_ID,
+  CURRENT_FEELS_LIKE_ID,
   DAILY_FORECAST_LINK_ID,
 } from '../constants.js';
 
@@ -20,10 +21,22 @@ export const createCurrentWeatherContainer = () => {
             <img id="${CURRENT_WEATHER_ICON_ID}" src="#" alt="weather icon" class="m-2" style="object-fit: contain;"/>
             <span id="${CURRENT_TEMPERATURE_ID}" style="font-size:6rem">temp</span>
             <span style="font-size:2rem; margin: 1rem 1rem 1rem 0;">°C</span>
-            <div class="d-flex flex-column justify-content-center">
-                <div id="${CURRENT_RAIN_ID}">Rain:</div>
-                <div id="${CURRENT_HUMIDITY_ID}">Humidity:%</div>
-                <div id="${CURRENT_WIND_ID}">Wind:wind km/s</div>
+            <div class="d-flex flex-column justify-content-center" style="min-width: 140px;">
+              <div class="container d-flex justify-content-start">
+                <span>Humidity:&nbsp;</span>
+                <span id="${CURRENT_HUMIDITY_ID}"></span>
+                <span>%</span>
+              </div>
+              <div class="container d-flex justify-content-start">
+                <span>Wind:&nbsp;</span>
+                <span id="${CURRENT_WIND_ID}"></span>
+                <span>km/s</span>
+              </div>
+              <div class="container d-flex justify-content-start">
+                <span>Feels like:&nbsp;</span>
+                <span id="${CURRENT_FEELS_LIKE_ID}"></span>
+                <span>°C</span>
+                </div>
             </div>
           </div>
           <div class="container-fluid d-flex flex-row justify-content-end">

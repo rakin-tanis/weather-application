@@ -18,7 +18,7 @@ export const populateForecastContainer = async ({
     const forecastCard = createForecastView(forecast);
     forecastContainer.appendChild(forecastCard);
     forecastCard.addEventListener('click', () => {
-      forecastChangedCallback(forecast);
+      forecastChangedCallback(forecast, forecasts.city);
     });
   });
 };

@@ -8,7 +8,6 @@ import 'bootstrap';
 const loadApp = async () => {
   document.title = 'Weather Application';
   const geoResult = await getGeo();
-  console.log(geoResult);
   createSearchPage(geoResult);
 };
 

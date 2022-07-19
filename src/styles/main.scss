@@ -110,3 +110,20 @@
   background-color: rgb(255, 255, 255);
   cursor: pointer;
 }
+
+.weatherProperty {
+  font-size: 0.9rem;
+  color: darkslategray;
+}
+
+.weatherValue {
+  font-size: 0.9rem;
+  color: darkslategray;
+  height: fit-content;
+}
+
+.weatherValueMeasureUnit {
+  font-size: 0.9rem;
+  color: darkslategray;
+  height: fit-content;
+}

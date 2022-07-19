@@ -20,6 +20,10 @@ import {
   saveSearchList,
 } from '../services/storageService.js';
 import { updateRecentlySearchPanel } from '../pages/currentWeatherDetailsComponent.js';
+import {
+  populateWeatherDetails,
+  populateWeatherForecastDetails,
+} from '../pages/currentWeatherDetailsComponent.js';
 
 let cityName;
 let longitude;
@@ -56,13 +60,11 @@ const searchResultCallback = async ({ city, lon, lat }) => {
   updateRecentlySearchPanel(restoreOldSearch);
 };
 
-const forecastChangedCallback = (forecast) => {
-  console.log('forecastChangedCallback', cityName);
+const forecastChangedCallback = (forecast, city) => {
   populateCurrentWeatherIntervalComponent({
     cityName: cityName,
     weather: forecast,
     showDailyForecastCallback: () => {
-      console.log('showDailyForecastCallback', cityName);
       setCurrentWeather({
         cityName: cityName,
         latitude: longitude,
@@ -70,6 +72,7 @@ const forecastChangedCallback = (forecast) => {
       });
     },
   });
+  populateWeatherForecastDetails(forecast, city);
 };
 
 const setCurrentWeather = async () => {
@@ -78,6 +81,7 @@ const setCurrentWeather = async () => {
     cityName: cityName,
     weather: currentWeather,
   });
+  populateWeatherDetails(currentWeather);
   return currentWeather;
 };
 

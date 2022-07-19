@@ -15,4 +15,14 @@ export const DAILY_FORECAST_LINK_ID = 'daily_forecast_link';
 export const RECENTLY_SEARCHED_ITEMS_ID = 'recently_searched_items';
 export const RECENTLY_SEARCHED_ID = 'recently_searched';
 export const RECENTLY_SEARCHED_ITEMS_TITLE_ID = 'recently_searched_items_title';
+export const CURRENT_FEELS_LIKE_ID = 'current_feels_like';
+export const DETAILS_MAX_TEMP_ID = 'details_max';
+export const DETAILS_MIN_TEMP_ID = 'details_min';
+export const DETAILS_PRESSURE_ID = 'details_pressure';
+export const DETAILS_CLOUDINESS_ID = 'details_cloudiness';
+export const DETAILS_WIND_DIRECTION_ID = 'details_wind_direction';
+export const DETAILS_VISIBILITY_ID = 'details_visibility';
+export const DETAILS_GUST_ID = 'details_gust';
+export const DETAILS_SUNRISE_ID = 'details_sunrise';
+export const DETAILS_SUNSET_ID = 'details_sunset';
 

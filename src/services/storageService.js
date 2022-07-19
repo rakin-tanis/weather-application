@@ -1,5 +1,6 @@
 const SEARCH_LIST = 'SEARCH_LIST';
 const LAST_SEARCHED_ITEM = 'LAST_SEARCHED_ITEM';
+const PERMISSION = 'PERMISSION';
 
 export const saveSearchList = (searchList) =>
   localStorage.setItem(SEARCH_LIST, toString(searchList));
@@ -17,6 +18,13 @@ export const getLastSearchedItem = () =>
 
 export const removeLastSearchedItem = () =>
   localStorage.removeItem(LAST_SEARCHED_ITEM);
+
+export const savePermission = (permission) =>
+  localStorage.setItem(PERMISSION, permission);
+
+export const getPermission = () => localStorage.getItem(PERMISSION);
+
+export const removePermission = () => localStorage.removeItem(PERMISSION);
 
 export const clearStorage = () => localStorage.clear();
 

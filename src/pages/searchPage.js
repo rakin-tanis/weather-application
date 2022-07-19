@@ -8,32 +8,33 @@ import { populateForecastContainer } from '../pages/forecastWeatherComponent.js'
 import { createSearchComponent } from './searchComponent.js';
 import { createBackgroundVideoComponent } from './backgroundVideoComponent.js';
 import { createHeaderComponent } from './headerComponent.js';
-import { getCurrentWeather } from '../services/apiService';
-import { getWeatherForecast } from '../services/apiService.js';
+import {
+  getCurrentWeather,
+  getWeatherForecast,
+  getGeo,
+} from '../services/apiService.js';
 import { createCurrentWeatherDetailsComponent } from './currentWeatherDetailsComponent.js';
 import {
   getLastSearchedItem,
+  getPermission,
   getSearchList,
   removeLastSearchedItem,
   resetSearchList,
   saveLastSearchedItem,
   saveSearchList,
+  savePermission,
 } from '../services/storageService.js';
 import { updateRecentlySearchPanel } from '../pages/currentWeatherDetailsComponent.js';
 import {
   populateWeatherDetails,
   populateWeatherForecastDetails,
 } from '../pages/currentWeatherDetailsComponent.js';
+import { askForPermission } from '../services/permissionService.js';
+import { DEFAULT_CITY } from '../constants.js';
 
-let cityName;
-let longitude;
-let latitude;
+let { cityName, longitude, latitude } = DEFAULT_CITY;
 
-export const createSearchPage = async (geoResult) => {
-  cityName = geoResult.city;
-  longitude = geoResult.longitude;
-  latitude = geoResult.latitude;
-
+export const createSearchPage = async () => {
   resetSearchList();
   removeLastSearchedItem();
 
@@ -43,8 +44,12 @@ export const createSearchPage = async (geoResult) => {
   createCurrentWeatherComponent();
   createCurrentWeatherDetailsComponent();
   createForecastWeatherComponent();
-  await setCurrentWeather();
-  await setForecastWeather();
+
+  let off = 0;
+  checkForPermission(off).then();
+
+  await setCurrentWeather({ signal: { off } });
+  await setForecastWeather({ signal: { off } });
   // updateRecentlySearchPanel(restoreOldSearch);
 };
 
@@ -54,8 +59,8 @@ const searchResultCallback = async ({ city, lon, lat }) => {
   latitude = lat;
 
   cacheSearchResult();
-  const currentWeather = await setCurrentWeather();
-  const forecast = await setForecastWeather();
+  const currentWeather = await setCurrentWeather({});
+  const forecast = await setForecastWeather({});
   updateSearchCache(currentWeather, forecast);
   updateRecentlySearchPanel(restoreOldSearch);
 };
@@ -75,8 +80,11 @@ const forecastChangedCallback = (forecast, city) => {
   populateWeatherForecastDetails(forecast, city);
 };
 
-const setCurrentWeather = async () => {
+const setCurrentWeather = async ({ signal }) => {
   const currentWeather = await getCurrentWeather(longitude, latitude);
+  if (signal?.off) {
+    return;
+  }
   populateCurrentWeatherComponent({
     cityName: cityName,
     weather: currentWeather,
@@ -85,8 +93,11 @@ const setCurrentWeather = async () => {
   return currentWeather;
 };
 
-const setForecastWeather = async () => {
+const setForecastWeather = async ({ signal }) => {
   const forecasts = await getWeatherForecast(longitude, latitude);
+  if (signal?.off) {
+    return;
+  }
   populateForecastContainer({
     forecasts: forecasts,
     forecastChangedCallback: forecastChangedCallback,
@@ -95,6 +106,9 @@ const setForecastWeather = async () => {
 };
 
 const cacheSearchResult = () => {
+  if (!getPermission()) {
+    return;
+  }
   const SEARCH_CACHE_LIMIT = 5;
 
   const searchList = getSearchList();
@@ -121,6 +135,9 @@ const cacheSearchResult = () => {
 };
 
 const updateSearchCache = (currentWeather, forecast) => {
+  if (!getPermission()) {
+    return;
+  }
   const lastSearchedItem = getLastSearchedItem();
   lastSearchedItem['currentWeather'] = currentWeather;
   lastSearchedItem['forecast'] = forecast;
@@ -143,4 +160,39 @@ const restoreOldSearch = (search) => {
     forecastChangedCallback: forecastChangedCallback,
   });
   updateRecentlySearchPanel(restoreOldSearch);
+};
+
+const checkForPermission = async (off) => {
+  let isAccepted = getPermission();
+
+  if (!isAccepted) {
+    isAccepted = await requestForPermission();
+  }
+
+  if (!isAccepted) {
+    return;
+  }
+  off = true;
+
+  await getLocation();
+
+  await setCurrentWeather({});
+  await setForecastWeather({});
+};
+
+const requestForPermission = async () => {
+  const isAccepted = await askForPermission();
+  if (!isAccepted) {
+    return;
+  }
+  savePermission(isAccepted);
+  return isAccepted;
+};
+
+const getLocation = async () => {
+  const geoResult = await getGeo();
+
+  cityName = geoResult.city;
+  longitude = geoResult.longitude;
+  latitude = geoResult.latitude;
 };

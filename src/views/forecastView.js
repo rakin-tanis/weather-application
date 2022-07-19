@@ -1,7 +1,6 @@
 import { importAll } from '../utils/util.js';
 import { toHtmlElement } from '../utils/util.js';
 import dateFormat from 'dateformat';
-import { env } from '../env.js';
 
 const icons = importAll(
   require.context('../assets/icons/', false, /\.(png|jpe?g|svg)$/)

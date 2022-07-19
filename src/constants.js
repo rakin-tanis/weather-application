@@ -25,4 +25,8 @@ export const DETAILS_VISIBILITY_ID = 'details_visibility';
 export const DETAILS_GUST_ID = 'details_gust';
 export const DETAILS_SUNRISE_ID = 'details_sunrise';
 export const DETAILS_SUNSET_ID = 'details_sunset';
-
+export const DEFAULT_CITY = {
+  cityName: 'Amsterdam',
+  longitude: 52.37403,
+  latitude: 4.88969,
+};

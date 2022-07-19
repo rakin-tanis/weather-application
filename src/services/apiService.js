@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 
 const makeRequest = async (url, params = {}, options = {}) => {
   const urlWithParams = addSearchParams(new URL(url), params);
@@ -6,6 +7,11 @@ const makeRequest = async (url, params = {}, options = {}) => {
   try {
     const response = await fetch(request);
     if (response.status != 200) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong on API server! ' + response.status,
+        icon: 'error'
+      })
       throw new Error('Something went wrong on API server!');
     } else {
       return response.json();

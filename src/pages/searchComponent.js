@@ -38,6 +38,12 @@ const addCallback = (callback) => {
       populateAutocomplete(searchInput.value, cityResult.results, callback);
     }
   });
+  searchForm.addEventListener('keypress', (e) => {
+    var key = e.charCode || e.keyCode || 0;
+    if (key == 13) {
+      e.preventDefault();
+    }
+  });
 };
 
 const populateAutocomplete = (searchedKey, results, callback) => {
